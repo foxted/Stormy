@@ -13,6 +13,7 @@
 		5745F39C1A83261000830D18 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5745F39B1A83261000830D18 /* Images.xcassets */; };
 		5745F39F1A83261000830D18 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5745F39D1A83261000830D18 /* LaunchScreen.xib */; };
 		5745F3AB1A83261000830D18 /* StormyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5745F3AA1A83261000830D18 /* StormyTests.swift */; };
+		5745F3B51A83568600830D18 /* Current.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5745F3B41A83568600830D18 /* Current.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		5745F3A41A83261000830D18 /* StormyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StormyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5745F3A91A83261000830D18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5745F3AA1A83261000830D18 /* StormyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormyTests.swift; sourceTree = "<group>"; };
+		5745F3B41A83568600830D18 /* Current.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Current.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 		5745F3911A83261000830D18 /* Stormy */ = {
 			isa = PBXGroup;
 			children = (
+				5745F3B41A83568600830D18 /* Current.swift */,
 				5745F3941A83261000830D18 /* AppDelegate.swift */,
 				5745F3961A83261000830D18 /* ViewController.swift */,
 				5745F3981A83261000830D18 /* Main.storyboard */,
@@ -212,6 +215,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5745F3B51A83568600830D18 /* Current.swift in Sources */,
 				5745F3971A83261000830D18 /* ViewController.swift in Sources */,
 				5745F3951A83261000830D18 /* AppDelegate.swift in Sources */,
 			);
