@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  WeatherController.swift
 //  Stormy
 //
 //  Created by Morgan Clayton on 2015-02-04.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class WeatherController: UIViewController {
     
     @IBOutlet weak var iconView: UIImageView!
     @IBOutlet weak var currentTimeLabel: UILabel!
@@ -41,19 +41,8 @@ class ViewController: UIViewController {
                 
                 let currentWeather = Current(weatherDictionary: weatherDictionary)
                 
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.temperatureLabel.text = "\(currentWeather.temperatureCelcius)"
-                    self.iconView.image = currentWeather.icon!
-                    self.currentTimeLabel.text = "At \(currentWeather.currentTime!) it is"
-                    self.humidityLabel.text = "\(currentWeather.humidityRatio)%"
-                    self.precipitationLabel.text = "\(currentWeather.precipProbabilityRatio)%"
-                    self.summaryLabel.text = "\(currentWeather.summary)"
-                    
-                    // Stop refresh
-                    self.refreshActivityIndicator.stopAnimating()
-                    self.refreshActivityIndicator.hidden = true
-                    self.refreshButton.hidden = false
-                    
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.updateViewLabels(currentWeather)
                 })
                 
             } else {
@@ -77,6 +66,20 @@ class ViewController: UIViewController {
             
         })
         downloadTask.resume()
+    }
+    
+    func updateViewLabels(currentWeather: Current) -> Void {
+        temperatureLabel.text = "\(currentWeather.temperatureCelcius)"
+        iconView.image = currentWeather.icon!
+        currentTimeLabel.text = "At \(currentWeather.currentTime!) it is"
+        humidityLabel.text = "\(currentWeather.humidityRatio)%"
+        precipitationLabel.text = "\(currentWeather.precipProbabilityRatio)%"
+        summaryLabel.text = "\(currentWeather.summary)"
+        
+        // Stop refresh
+        refreshActivityIndicator.stopAnimating()
+        refreshActivityIndicator.hidden = true
+        refreshButton.hidden = false
     }
     
     override func didReceiveMemoryWarning() {
