@@ -1,5 +1,5 @@
 //
-//  Current.swift
+//  CurrentWeather.swift
 //  Stormy
 //
 //  Created by Morgan Clayton on 2015-02-04.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-struct Current {
+struct CurrentWeather {
     
     var currentTime: String?
     var temperature: Int

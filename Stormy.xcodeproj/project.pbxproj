@@ -7,13 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		57239BCD1A86ACD20012B9CD /* WeatherLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57239BCC1A86ACD20012B9CD /* WeatherLocation.swift */; };
 		5745F3951A83261000830D18 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5745F3941A83261000830D18 /* AppDelegate.swift */; };
 		5745F3971A83261000830D18 /* WeatherController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5745F3961A83261000830D18 /* WeatherController.swift */; };
 		5745F39A1A83261000830D18 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5745F3981A83261000830D18 /* Main.storyboard */; };
 		5745F39C1A83261000830D18 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5745F39B1A83261000830D18 /* Images.xcassets */; };
 		5745F39F1A83261000830D18 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5745F39D1A83261000830D18 /* LaunchScreen.xib */; };
 		5745F3AB1A83261000830D18 /* StormyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5745F3AA1A83261000830D18 /* StormyTests.swift */; };
-		5745F3B51A83568600830D18 /* Current.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5745F3B41A83568600830D18 /* Current.swift */; };
+		5745F3B51A83568600830D18 /* CurrentWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5745F3B41A83568600830D18 /* CurrentWeather.swift */; };
+		57FA76921A848C38008F5947 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA76911A848C38008F5947 /* WeatherService.swift */; };
+		57FA76951A8493CF008F5947 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57FA76941A8493CF008F5947 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +30,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		57239BCC1A86ACD20012B9CD /* WeatherLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherLocation.swift; sourceTree = "<group>"; };
 		5745F38F1A83261000830D18 /* Stormy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stormy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5745F3931A83261000830D18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5745F3941A83261000830D18 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -37,7 +41,10 @@
 		5745F3A41A83261000830D18 /* StormyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StormyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5745F3A91A83261000830D18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5745F3AA1A83261000830D18 /* StormyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StormyTests.swift; sourceTree = "<group>"; };
-		5745F3B41A83568600830D18 /* Current.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Current.swift; sourceTree = "<group>"; };
+		5745F3B41A83568600830D18 /* CurrentWeather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentWeather.swift; sourceTree = "<group>"; };
+		57FA76911A848C38008F5947 /* WeatherService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
+		57FA76941A8493CF008F5947 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		57FA76961A849C09008F5947 /* Tryouts.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Tryouts.playground; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57FA76951A8493CF008F5947 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +69,8 @@
 		5745F3861A83261000830D18 = {
 			isa = PBXGroup;
 			children = (
+				57FA76961A849C09008F5947 /* Tryouts.playground */,
+				57FA76941A8493CF008F5947 /* CoreLocation.framework */,
 				5745F3911A83261000830D18 /* Stormy */,
 				5745F3A71A83261000830D18 /* StormyTests */,
 				5745F3901A83261000830D18 /* Products */,
@@ -79,7 +89,7 @@
 		5745F3911A83261000830D18 /* Stormy */ = {
 			isa = PBXGroup;
 			children = (
-				5745F3B41A83568600830D18 /* Current.swift */,
+				57FA768F1A848B90008F5947 /* Weather */,
 				5745F3941A83261000830D18 /* AppDelegate.swift */,
 				5745F3961A83261000830D18 /* WeatherController.swift */,
 				5745F3981A83261000830D18 /* Main.storyboard */,
@@ -113,6 +123,16 @@
 				5745F3A91A83261000830D18 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		57FA768F1A848B90008F5947 /* Weather */ = {
+			isa = PBXGroup;
+			children = (
+				5745F3B41A83568600830D18 /* CurrentWeather.swift */,
+				57FA76911A848C38008F5947 /* WeatherService.swift */,
+				57239BCC1A86ACD20012B9CD /* WeatherLocation.swift */,
+			);
+			name = Weather;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,7 +235,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5745F3B51A83568600830D18 /* Current.swift in Sources */,
+				57239BCD1A86ACD20012B9CD /* WeatherLocation.swift in Sources */,
+				57FA76921A848C38008F5947 /* WeatherService.swift in Sources */,
+				5745F3B51A83568600830D18 /* CurrentWeather.swift in Sources */,
 				5745F3971A83261000830D18 /* WeatherController.swift in Sources */,
 				5745F3951A83261000830D18 /* AppDelegate.swift in Sources */,
 			);

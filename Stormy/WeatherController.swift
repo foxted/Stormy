@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import CoreLocation
 
-class WeatherController: UIViewController {
+class WeatherController: UIViewController, CLLocationManagerDelegate {
+    
+    var locationManager: CLLocationManager!
     
     @IBOutlet weak var iconView: UIImageView!
     @IBOutlet weak var currentTimeLabel: UILabel!
@@ -18,73 +21,23 @@ class WeatherController: UIViewController {
     @IBOutlet weak var summaryLabel: UILabel!
     @IBOutlet weak var refreshButton: UIButton!
     @IBOutlet weak var refreshActivityIndicator: UIActivityIndicatorView!
-    
-    private let apiKey = "4f9288af14b2c172d497f4538a8dfc80"
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
+        localizeDevice()
+        
         refreshActivityIndicator.hidden = true
+        
         getCurrentWeatherData()
-    }
-    
-    func getCurrentWeatherData() -> Void {
-        let baseURL = NSURL(string: "https://api.forecast.io/forecast/\(apiKey)/")
-        let forecastURL = NSURL(string: "49.275568,-123.127829", relativeToURL: baseURL)
         
-        let sharedSession = NSURLSession.sharedSession()
-        let downloadTask: NSURLSessionDownloadTask = sharedSession.downloadTaskWithURL(forecastURL!, completionHandler:{( location: NSURL!, response:NSURLResponse!, error: NSError!) -> Void in
-            
-            if(error == nil) {
-                let dataObject = NSData(contentsOfURL: location)
-                let weatherDictionary: NSDictionary = NSJSONSerialization.JSONObjectWithData(dataObject!, options: nil, error: nil) as NSDictionary
-                
-                let currentWeather = Current(weatherDictionary: weatherDictionary)
-                
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.updateViewLabels(currentWeather)
-                })
-                
-            } else {
-                let networkIssueController = UIAlertController(title: "Network Error", message: "Unable to connect to the Internet", preferredStyle: .Alert)
-                
-                let okButton = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                networkIssueController.addAction(okButton)
-                
-                let cancelButton = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
-                networkIssueController.addAction(cancelButton)
-                
-                self.presentViewController(networkIssueController, animated: true, completion: nil)
-                
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    // Stop refresh
-                    self.refreshActivityIndicator.stopAnimating()
-                    self.refreshActivityIndicator.hidden = true
-                    self.refreshButton.hidden = false
-                })
-            }
-            
-        })
-        downloadTask.resume()
-    }
-    
-    func updateViewLabels(currentWeather: Current) -> Void {
-        temperatureLabel.text = "\(currentWeather.temperatureCelcius)"
-        iconView.image = currentWeather.icon!
-        currentTimeLabel.text = "At \(currentWeather.currentTime!) it is"
-        humidityLabel.text = "\(currentWeather.humidityRatio)%"
-        precipitationLabel.text = "\(currentWeather.precipProbabilityRatio)%"
-        summaryLabel.text = "\(currentWeather.summary)"
-        
-        // Stop refresh
-        refreshActivityIndicator.stopAnimating()
-        refreshActivityIndicator.hidden = true
-        refreshButton.hidden = false
     }
     
     override func didReceiveMemoryWarning() {
+        
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
 
     @IBAction func refresh() {
@@ -94,6 +47,58 @@ class WeatherController: UIViewController {
         refreshButton.hidden = true
         refreshActivityIndicator.hidden = false
         refreshActivityIndicator.startAnimating()
+        
+    }
+    
+    func localizeDevice() -> Void {
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        locationManager.startUpdatingLocation()
+        
+    }
+    
+    /*
+        Get current weather data from service
+    */
+    func getCurrentWeatherData() -> Void {
+        
+        // Find the weather at this location
+        WeatherService.getCurrentWeatherData(currentView: self, completionHandler: updateViewLabels, errorHandler: stopRefreshButton)
+        
+    }
+    
+    /*
+        Update labels on the view with current weather
+    */
+    func updateViewLabels(currentWeather: CurrentWeather) -> Void {
+        
+        temperatureLabel.text = "\(currentWeather.temperatureCelcius)"
+        iconView.image = currentWeather.icon!
+        currentTimeLabel.text = "At \(currentWeather.currentTime!) it is"
+        humidityLabel.text = "\(currentWeather.humidityRatio)%"
+        precipitationLabel.text = "\(currentWeather.precipProbabilityRatio)%"
+        summaryLabel.text = "\(currentWeather.summary)"
+        
+        stopRefreshButton()
+        
+    }
+    
+    /*
+        Stop refresh button
+    */
+    func stopRefreshButton() -> Void {
+        
+        refreshActivityIndicator.stopAnimating()
+        refreshActivityIndicator.hidden = true
+        refreshButton.hidden = false
+        
+    }
+    
+    func locationManager(manager:CLLocationManager, didUpdateLocations locations:[AnyObject]) {
+        println("locations = \(locations)")
+        manager.stopUpdatingLocation()
     }
 
 }
