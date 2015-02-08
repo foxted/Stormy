@@ -66,24 +66,42 @@ class WeatherController: UIViewController, CLLocationManagerDelegate {
         CLGeocoder().reverseGeocodeLocation(manager.location, completionHandler: {(placemarks, error) -> Void in
             
             if error != nil {
-                println("Reverse geocoder failed with error" + error.localizedDescription)
-                return
+                self.showGeolocationError()
+
+                self.backtoDefault()
             }
             if placemarks.count > 0 {
                 let pm = placemarks[0] as CLPlacemark
                 
-                self.locationName = "\(pm.locality), \(pm.administrativeArea)"
+                if pm.locality != nil {
+                    switch(pm.country){
+                        case "Canada", "US":
+                            self.locationName = "\(pm.locality), \(pm.administrativeArea)"
+                        default:
+                            self.locationName = "\(pm.locality)"
+                    }
+                }
+                else if pm.country != nil{
+                    self.locationName = "\(pm.country)"
+                }
             }
-                
-                
             else {
-                println("Problem with the data received from geocoder")
+                self.showGeolocationError()
+                self.backtoDefault()
             }
         
         })
         
         WeatherService.getCurrentWeatherData(currentView: self, completionHandler: updateViewLabels, errorHandler: stopRefreshButton)
         
+    }
+    
+    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+        
+        showGeolocationError()
+        
+        backtoDefault()
+
     }
     
     /*
@@ -104,6 +122,36 @@ class WeatherController: UIViewController, CLLocationManagerDelegate {
         stopRefreshButton()
         
     }
+    
+    /*
+    Update labels on the view with current weather
+    */
+    func backtoDefault() -> Void {
+        
+        temperatureLabel.text = "0"
+        iconView.image = UIImage(named: "default.png")
+        currentTimeLabel.text = ""
+        humidityLabel.text = "-"
+        precipitationLabel.text = "-"
+        summaryLabel.text = ""
+        locationLabel.text = ""
+        
+        stopRefreshButton()
+        
+    }
+    
+    func showGeolocationError() -> Void {
+        let networkIssueController = UIAlertController(title: "Location Error", message: "Unable to find your location.", preferredStyle: .Alert)
+        
+        let okButton = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        networkIssueController.addAction(okButton)
+        
+        self.presentViewController(networkIssueController, animated: true, completion: nil)
+        
+        self.locationManager.stopUpdatingLocation()
+        
+    }
+
     
     /*
         Stop refresh button

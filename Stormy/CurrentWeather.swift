@@ -28,7 +28,7 @@ struct CurrentWeather {
     var icon: UIImage?
     var locationName: String!
     
-    init(currentLocation: String, weatherDictionary: NSDictionary) {
+    init(currentLocation: String?, weatherDictionary: NSDictionary) {
         let currentWeather = weatherDictionary["currently"] as NSDictionary
 
         temperature = currentWeather["temperature"] as Int
@@ -42,7 +42,9 @@ struct CurrentWeather {
         let iconString = currentWeather["icon"] as String
         icon = weatherIconFromString(iconString)
         
-        locationName = currentLocation
+        if currentLocation != nil {
+            locationName = currentLocation
+        }
     }
     
     func dateStringFromUnixTime(unixTime: Int) -> String {
