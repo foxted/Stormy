@@ -12,6 +12,8 @@ import CoreLocation
 class WeatherController: UIViewController, CLLocationManagerDelegate {
     
     var locationManager: CLLocationManager!
+    var location: CLLocationCoordinate2D!
+    var locationName: String!
     
     @IBOutlet weak var iconView: UIImageView!
     @IBOutlet weak var currentTimeLabel: UILabel!
@@ -21,16 +23,15 @@ class WeatherController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var summaryLabel: UILabel!
     @IBOutlet weak var refreshButton: UIButton!
     @IBOutlet weak var refreshActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var locationLabel: UILabel!
 
     override func viewDidLoad() {
         
         super.viewDidLoad()
-
-        localizeDevice()
         
         refreshActivityIndicator.hidden = true
         
-        getCurrentWeatherData()
+        getLocalizedWeather()
         
     }
     
@@ -42,7 +43,7 @@ class WeatherController: UIViewController, CLLocationManagerDelegate {
 
     @IBAction func refresh() {
         
-        getCurrentWeatherData()
+        getLocalizedWeather()
         
         refreshButton.hidden = true
         refreshActivityIndicator.hidden = false
@@ -50,7 +51,7 @@ class WeatherController: UIViewController, CLLocationManagerDelegate {
         
     }
     
-    func localizeDevice() -> Void {
+    func getLocalizedWeather() -> Void {
         locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -58,12 +59,29 @@ class WeatherController: UIViewController, CLLocationManagerDelegate {
         locationManager.startUpdatingLocation()
     }
     
-    /*
-        Get current weather data from service
-    */
-    func getCurrentWeatherData() -> Void {
+    func locationManager(manager:CLLocationManager, didUpdateLocations locations:[AnyObject]) -> Void {
         
-        // Find the weather at this location
+        location = manager.location.coordinate
+        
+        CLGeocoder().reverseGeocodeLocation(manager.location, completionHandler: {(placemarks, error) -> Void in
+            
+            if error != nil {
+                println("Reverse geocoder failed with error" + error.localizedDescription)
+                return
+            }
+            if placemarks.count > 0 {
+                let pm = placemarks[0] as CLPlacemark
+                
+                self.locationName = "\(pm.locality), \(pm.administrativeArea)"
+            }
+                
+                
+            else {
+                println("Problem with the data received from geocoder")
+            }
+        
+        })
+        
         WeatherService.getCurrentWeatherData(currentView: self, completionHandler: updateViewLabels, errorHandler: stopRefreshButton)
         
     }
@@ -71,7 +89,7 @@ class WeatherController: UIViewController, CLLocationManagerDelegate {
     /*
         Update labels on the view with current weather
     */
-    func updateViewLabels(currentWeather: CurrentWeather) -> Void {
+    func updateViewLabels(currentWeather: CurrentWeather) -> Void {    
         
         temperatureLabel.text = "\(currentWeather.temperatureCelcius)"
         iconView.image = currentWeather.icon!
@@ -79,6 +97,9 @@ class WeatherController: UIViewController, CLLocationManagerDelegate {
         humidityLabel.text = "\(currentWeather.humidityRatio)%"
         precipitationLabel.text = "\(currentWeather.precipProbabilityRatio)%"
         summaryLabel.text = "\(currentWeather.summary)"
+        if currentWeather.locationName != nil {
+            locationLabel.text = "\(currentWeather.locationName)"
+        }
         
         stopRefreshButton()
         
@@ -93,11 +114,6 @@ class WeatherController: UIViewController, CLLocationManagerDelegate {
         refreshActivityIndicator.hidden = true
         refreshButton.hidden = false
         
-    }
-    
-    func locationManager(manager:CLLocationManager, didUpdateLocations locations:[AnyObject]) {
-        println("locations = \(locations)")
-        manager.stopUpdatingLocation()
     }
 
 }

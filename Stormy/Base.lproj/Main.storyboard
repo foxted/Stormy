@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -121,6 +121,7 @@
                         <outlet property="currentTimeLabel" destination="qSA-Uv-dc4" id="bTK-SJ-W1P"/>
                         <outlet property="humidityLabel" destination="RDv-kA-VVk" id="EQG-TY-Dlv"/>
                         <outlet property="iconView" destination="bbb-Fv-2c0" id="hb5-ZP-UJ8"/>
+                        <outlet property="locationLabel" destination="cM1-yg-V0D" id="6S5-Wc-LHL"/>
                         <outlet property="precipitationLabel" destination="MJF-lf-0s0" id="avi-zq-3Yu"/>
                         <outlet property="refreshActivityIndicator" destination="IVo-H6-wVh" id="c11-SR-GHX"/>
                         <outlet property="refreshButton" destination="LlS-o7-bMG" id="mL1-7n-VpM"/>
