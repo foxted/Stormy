@@ -11,7 +11,13 @@ import UIKit
 
 struct CurrentWeather {
     
-    var currentTime: String?
+    var currentTime: String {
+        var date = NSDate()
+        var outputFormat = NSDateFormatter()
+        outputFormat.locale = NSLocale(localeIdentifier:"en_US")
+        outputFormat.dateFormat = "HH:mm:ss"
+        return outputFormat.stringFromDate(date)
+    }
     var temperature: Int
     var temperatureCelcius: Int {
         return Int(Double(temperature - 32) / 1.8)
@@ -35,9 +41,6 @@ struct CurrentWeather {
         humidity = currentWeather["humidity"] as Double
         precipProbability = currentWeather["precipProbability"] as Double
         summary = currentWeather["summary"] as String
-        
-        let currentTimeIntValue = currentWeather["time"] as Int
-        currentTime = dateStringFromUnixTime(currentTimeIntValue)
         
         let iconString = currentWeather["icon"] as String
         icon = weatherIconFromString(iconString)

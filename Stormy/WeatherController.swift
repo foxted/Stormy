@@ -111,7 +111,7 @@ class WeatherController: UIViewController, CLLocationManagerDelegate {
         
         temperatureLabel.text = "\(currentWeather.temperatureCelcius)"
         iconView.image = currentWeather.icon!
-        currentTimeLabel.text = "At \(currentWeather.currentTime!) it is"
+        currentTimeLabel.text = "\(currentWeather.currentTime)"
         humidityLabel.text = "\(currentWeather.humidityRatio)%"
         precipitationLabel.text = "\(currentWeather.precipProbabilityRatio)%"
         summaryLabel.text = "\(currentWeather.summary)"
