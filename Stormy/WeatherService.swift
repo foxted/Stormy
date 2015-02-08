@@ -41,8 +41,13 @@ struct WeatherService {
                 let okButton = UIAlertAction(title: "OK", style: .Default, handler: nil)
                 networkIssueController.addAction(okButton)
                 
-                let cancelButton = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
-                networkIssueController.addAction(cancelButton)
+                let settingsButton = UIAlertAction(title: "Settings", style: .Default) { (_) -> Void in
+                    let settingsUrl = NSURL(string: UIApplicationOpenSettingsURLString)
+                    if let url = settingsUrl {
+                        UIApplication.sharedApplication().openURL(url)
+                    }
+                }
+                networkIssueController.addAction(settingsButton)
                 
                 currentView.presentViewController(networkIssueController, animated: true, completion: nil)
                 
